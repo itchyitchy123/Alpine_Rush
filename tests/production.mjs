@@ -26,4 +26,8 @@ if(!fs.existsSync('leaderboard/server.mjs'))throw new Error('Missing leaderboard
 if(!sw.includes("./game.js?v=121"))throw new Error('Service worker is not caching the current game build');
 for(const token of ['function drawDownhillSkiTips','function drawRearRiderDetails'])if(!game.includes(token))throw new Error(`Missing downhill rider orientation guard: ${token}`);
 for(const token of ['FINAL SEQUENCE','finaleClears','finaleCourseLength','finaleModeObjective','finaleFeature:o.feature'])if(!game.includes(token))throw new Error(`Missing finale regression guard: ${token}`);
+const input=fs.readFileSync('systems/input.js','utf8');
+for(const token of ['navigator.getGamepads','dispatchValue','previousButtons','gamepadConnected'])if(!input.includes(token))throw new Error(`Missing controller input guard: ${token}`);
+const world=fs.readFileSync('world3d.js','utf8');
+if(!world.includes("getComputedStyle(canvas).display==='none'"))throw new Error('Hidden renderer must not start a duplicate runtime');
 console.log('Alpine Rush production checks passed');
